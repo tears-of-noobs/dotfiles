@@ -2,6 +2,7 @@ set nocompatible
 filetype off
 filetype plugin indent off
 set rtp+=~/.vim/bundle/vundle/
+set rtp+=/usr/share/go/misc/vim
 call vundle#rc()
 
 filetype plugin on
@@ -63,3 +64,8 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+augroup hilight_over_80
+    au!
+    au VimResized,VimEnter * set cc= | for i in range(80, &columns > 80 ? &columns : 80) | exec "set cc+=" . i | endfor
+augroup end
