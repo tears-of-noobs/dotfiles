@@ -18,6 +18,7 @@ Bundle 'jistr/vim-nerdtree-tabs'
 """" Move by TAB in autocomplete menu
 Bundle 'ervandew/supertab'
 Bundle 'klen/python-mode'
+Bundle 'davidhalter/jedi-vim'
 
 
 syntax enable
@@ -39,6 +40,11 @@ let g:airline_powerline_fonts = 1
 let g:nerdtree_tabs_focus_on_files=1
 let NERDTreeMapOpenInTab='\r'
 let g:SuperTabDefaultCompletionType = "<c-n>"
+
+"""" Python-mode
+let g:python_folding = 0
+let g:pymode_rope = 0
+let g:pymode_rope_completion = 0
 
 
 nnoremap <up> <nop>
