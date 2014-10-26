@@ -1,28 +1,35 @@
 set nocompatible
 filetype off
 filetype plugin indent off
-set rtp+=~/.vim/bundle/vundle/
-set rtp+=/usr/share/go/misc/vim
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+""set rtp+=/usr/share/go/misc/vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+""Plugin 'gmarik/vundle'
+Plugin 'tpope/vim-fugitive'
+Plugin 'bling/vim-airline'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'jistr/vim-nerdtree-tabs'  
+"""" Move by TAB in autocomplete menu
+"" Plugin 'ervandew/supertab'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'klen/python-mode'
+"" Plugin 'Blackrush/vim-gocode'
+Plugin 'cespare/vim-toml'
+Plugin 'hsanson/vim-android'
+Plugin 'fatih/vim-go'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'majutsushi/tagbar'
+
+call vundle#end() 
 
 filetype plugin on
 filetype indent on
 
 
-Bundle 'gmarik/vundle'
-Bundle 'tpope/vim-fugitive'
-Bundle 'bling/vim-airline'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'jistr/vim-nerdtree-tabs'  
-"""" Move by TAB in autocomplete menu
-Bundle 'ervandew/supertab'
-Bundle 'klen/python-mode'
-Bundle 'davidhalter/jedi-vim'
-
-
 syntax enable
-set background=dark
 colorscheme solarized
 
 set history=500
@@ -35,17 +42,17 @@ set tabstop=4
 set backspace=2
 set laststatus=2
 
-let g:airline_theme='dark'
+let g:airline_theme='solarized'
 let g:airline_powerline_fonts = 1
 let g:nerdtree_tabs_focus_on_files=1
 let NERDTreeMapOpenInTab='\r'
-let g:SuperTabDefaultCompletionType = "<c-n>"
+""" let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
+nmap <F8> :TagbarToggle<CR>
 
-"""" Python-mode
-let g:python_folding = 0
+
+"""" python-mode
 let g:pymode_rope = 0
 let g:pymode_rope_completion = 0
-
 
 nnoremap <up> <nop>
 nnoremap <down> <nop>
@@ -66,6 +73,10 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+let g:ycm_min_num_of_chars_for_completion = 1
+let g:ycm_auto_trigger = 1
+let g:ycm_key_list_select_completion = ['<TAB>', '<Enter>']
 
 augroup hilight_over_80
     au!
