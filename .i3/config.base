@@ -88,13 +88,20 @@ bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
+# workspaces
+
+workspace "1:Root" output LVSD
+workspace "2:Web" output LVDS
+workspace "3:Dev" output LVDS
+workspace "4:Dev" output LVDS
+workspace "5:Im" output LVDS
 
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
+bindsym $mod+1 workspace 1:Root
+bindsym $mod+2 workspace 2:Web
+bindsym $mod+3 workspace 3:Dev
+bindsym $mod+4 workspace 4:Dev
+bindsym $mod+5 workspace 5:Im
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8

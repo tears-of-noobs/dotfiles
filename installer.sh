@@ -1,16 +1,18 @@
 #!/bin/sh
 
 THEME=$1
-if [ "$THEME" != "light" ] && [ "$THEME" != "dark" ]
+if [ "$THEME" != "solarized-light" ] && 
+    [ "$THEME" != "solorized-dark" ] &&
+    [ "$THEME" != "seoul256-dark" ]
 then 
     echo "Incorrect or empty theme name"
     exit 1;
 fi 
 
-DEPENDENCY_PACKAGES=("rxvt-unicode" "vim" "zsh" "i3-wm" "xorg-xrdb" "git" "mc")
+DEPENDENCY_PACKAGES=("rxvt-unicode" "vim" "mcabber" "zsh" "i3-wm" "xorg-xrdb" "git")
 RXVT_COLORSCHEME_DIR=~/.Xdefaults
 
-echo "This script bootstraping your environment with ${THEME} solarized color scheme" 
+echo "This script bootstraping your environment with ${THEME} color scheme" 
 
 for p in ${DEPENDENCY_PACKAGES[@]}
 do 
@@ -29,24 +31,14 @@ cp .fonts/* ~/.fonts && fc-cache -f
 echo "Copying dircolors"
 cp .dircolors ~/
 
-echo "Installing solarized theme for Midnight commander"
-if [ ! -d ~/.mc ] 
-then 
-    mkdir ~/.mc
-fi 
-
-cp .mc/solarized.ini ~/.mc/
-
-
 echo "Setting up theme for rxvt-unicode" 
 if [ ! -d "$RXVT_COLORSCHEME_DIR" ] 
 then 
     mkdir ${RXVT_COLORSCHEME_DIR}
 fi 
 
-TH=$(cat .Xdefaults/solarized."$THEME")
-cat .Xdefaults/solarized.base | awk  -v TH="$TH" '{sub(/{THEME}/, TH); print; }' > "$RXVT_COLORSCHEME_DIR"/solarized.scheme
-cp .Xresources ~/
+cp .Xdefaults/"$THEME" "$RXVT_COLORSCHEME_DIR"/rxvt.theme
+cp .Xresources ~/.Xresources
 xrdb -merge ~/.Xresources
 
 echo "Setting up zsh" 
@@ -63,6 +55,8 @@ then
     echo "Installing Oh-my-zsh from github repo"
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
+
+cp norm+.zsh-theme ~/.oh-my-zsh/themes/ 
 
 ALIASES=""
 
@@ -89,23 +83,30 @@ esac
 
 echo "Setting up VIM"
 cp .vimrc ~/ 
-if [ ! -d ~/.vim ] 
-then 
-    mkdir -p ~/.vim/colors
-
-else 
-    if [ ! -d ~/.vim/colors ]
-    then 
-        mkdir ~/.vim/colors 
-    fi 
-fi
-
-cp .vim/colors/solarized.vim ~/.vim/colors/
 
 if [ ! -d ~/.vim/bundle ]
 then 
     mkdir ~/.vim/bundle 
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
+
+echo "Setting up mcabber"
+
+if [ ! -d ~/.mcabber ]
+then 
+    mkdir ~/.mcabber 
+fi 
+cp .mcabber/mcabberrc ~/.mcabber/ 
+
+echo -n "Enter username: " 
+read username 
+
+sed -i "s/{{USERNAME}}/$username/" ~/.mcabber/mcabberrc 
+
+echo -n "Enter password: " 
+read password
+
+sed -i "s/{{PASSWORD}}/$password/" ~/.mcabber/mcabberrc 
+
 
 echo "Finished!"

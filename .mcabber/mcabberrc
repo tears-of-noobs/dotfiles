@@ -1,0 +1,23 @@
+set jid = {{USERNAME}}
+set password = {{PASSWORD}}
+set server = xmpp.office.ngs.ru
+
+set ignore_self_presence = 1
+
+set tls = 1
+set ssl_ignore_checks = 1
+
+set cmdhistory_lines = 500
+
+set roster_display_filter = ofdna
+
+set logging = 1
+set load_logs = 1
+set logging_dir = ~/.mcabber/history/
+
+set logging_ignore_status = 1
+
+set roster_width=40
+
+source ~/.mcabber/mcabberrc.seoul256
+

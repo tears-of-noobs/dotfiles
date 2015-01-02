@@ -22,6 +22,7 @@ Plugin 'hsanson/vim-android'
 Plugin 'fatih/vim-go'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'majutsushi/tagbar'
+Plugin 'junegunn/seoul256.vim'
 
 call vundle#end() 
 
@@ -30,7 +31,8 @@ filetype indent on
 
 
 syntax enable
-colorscheme solarized
+let g:seoul256_background = 233
+colorscheme seoul256
 
 set history=500
 set smartcase
@@ -42,7 +44,7 @@ set tabstop=4
 set backspace=2
 set laststatus=2
 
-let g:airline_theme='solarized'
+let g:airline_theme='bubblegum'
 let g:airline_powerline_fonts = 1
 let g:nerdtree_tabs_focus_on_files=1
 let NERDTreeMapOpenInTab='\r'
@@ -53,6 +55,8 @@ nmap <F8> :TagbarToggle<CR>
 """" python-mode
 let g:pymode_rope = 0
 let g:pymode_rope_completion = 0
+
+let g:go_fmt_command = "goimports"
 
 nnoremap <up> <nop>
 nnoremap <down> <nop>
