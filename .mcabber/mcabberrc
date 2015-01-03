@@ -1,6 +1,6 @@
 set jid = {{USERNAME}}
 set password = {{PASSWORD}}
-set server = xmpp.office.ngs.ru
+set server = {{SERVER}}
 
 set ignore_self_presence = 1
 

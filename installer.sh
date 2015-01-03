@@ -97,6 +97,7 @@ then
     mkdir ~/.mcabber 
 fi 
 cp .mcabber/mcabberrc ~/.mcabber/ 
+cp .mcabber/mcabberrc.seoul256 ~/.mcabber/
 
 echo -n "Enter username: " 
 read username 
@@ -107,6 +108,11 @@ echo -n "Enter password: "
 read password
 
 sed -i "s/{{PASSWORD}}/$password/" ~/.mcabber/mcabberrc 
+
+echo -n "Enter XMPP server: " 
+read server
+
+sed -i "s/{{SERVER}}/$server/" ~/.mcabber/mcabberrc 
 
 
 echo "Finished!"
