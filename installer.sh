@@ -9,7 +9,8 @@ then
     exit 1;
 fi 
 
-DEPENDENCY_PACKAGES=("rxvt-unicode" "vim" "mcabber" "zsh" "i3-wm" "xorg-xrdb" "git")
+DEPENDENCY_PACKAGES=("rxvt-unicode" "vim" "mcabber" "zsh" "i3-wm" 
+"xorg-xrdb" "git" "pptpclient")
 RXVT_COLORSCHEME_DIR=~/.Xdefaults
 
 echo "This script bootstraping your environment with ${THEME} color scheme" 
@@ -21,12 +22,12 @@ do
         echo "Dependency package "$p" installed"
     else 
         echo "Installing missing package "$p""
-        pacman -S $p --noconfirm
+        sudo pacman -S $p --noconfirm
     fi
 done
 
 echo "Copying fonts"
-cp .fonts/* ~/.fonts && fc-cache -f
+mkdir ~/.fonts && cp .fonts/* ~/.fonts && fc-cache -f
 
 echo "Copying dircolors"
 cp .dircolors ~/
