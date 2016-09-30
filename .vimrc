@@ -2,23 +2,19 @@ set nocompatible
 filetype off
 filetype plugin indent off
 set rtp+=~/.vim/bundle/Vundle.vim
-""set rtp+=/usr/share/go/misc/vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-""Plugin 'gmarik/vundle'
-Plugin 'tpope/vim-fugitive'
 Plugin 'bling/vim-airline'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'jistr/vim-nerdtree-tabs'  
-"""" Move by TAB in autocomplete menu
-"" Plugin 'ervandew/supertab'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'klen/python-mode'
-"" Plugin 'Blackrush/vim-gocode'
 Plugin 'cespare/vim-toml'
 Plugin 'hsanson/vim-android'
+Plugin 'posva/vim-vue'
+Plugin 'othree/html5.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'digitaltoad/vim-pug'
 Plugin 'fatih/vim-go'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'majutsushi/tagbar'
@@ -31,8 +27,9 @@ filetype indent on
 
 
 syntax enable
-let g:seoul256_background = 233
+let g:seoul256_background = 236
 colorscheme seoul256
+set background=dark
 
 set history=500
 set smartcase
@@ -44,19 +41,20 @@ set tabstop=4
 set backspace=2
 set laststatus=2
 
-let g:airline_theme='bubblegum'
 let g:airline_powerline_fonts = 1
-let g:nerdtree_tabs_focus_on_files=1
-let NERDTreeMapOpenInTab='\r'
-""" let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
-nmap <F8> :TagbarToggle<CR>
 
-
-"""" python-mode
-let g:pymode_rope = 0
-let g:pymode_rope_completion = 0
-
+" vim-go settings
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_interfaces = 1
+let g:go_highlight_operators = 1
 let g:go_fmt_command = "goimports"
+
+let g:nerdtree_tabs_focus_on_files=1
+let NERDTreeMapOpenInTab='<ENTER>'
+nmap <F8> :TagbarToggle<CR>
 
 nnoremap <up> <nop>
 nnoremap <down> <nop>
@@ -85,4 +83,9 @@ let g:ycm_key_list_select_completion = ['<TAB>', '<Enter>']
 augroup hilight_over_80
     au!
     au VimResized,VimEnter * set cc= | for i in range(80, &columns > 80 ? &columns : 80) | exec "set cc+=" . i | endfor
+augroup end
+
+augroup js_settings
+    au!
+    autocmd FileType javascript,pug setl shiftwidth=2 softtabstop=2 tabstop=2 expandtab 
 augroup end

@@ -1,19 +1,12 @@
 #!/bin/sh
 
-THEME=$1
-if [ "$THEME" != "solarized-light" ] && 
-    [ "$THEME" != "solorized-dark" ] &&
-    [ "$THEME" != "seoul256-dark" ]
-then 
-    echo "Incorrect or empty theme name"
-    exit 1;
-fi 
+DEPENDENCY_PACKAGES=(
+    "rxvt-unicode" "vim" "mcabber" "zsh" "i3-wm" "go"
+    "xorg-xrdb" "git" "pptpclient")
 
-DEPENDENCY_PACKAGES=("rxvt-unicode" "vim" "mcabber" "zsh" "i3-wm" 
-"xorg-xrdb" "git" "pptpclient")
 RXVT_COLORSCHEME_DIR=~/.Xdefaults
 
-echo "This script bootstraping your environment with ${THEME} color scheme" 
+echo "This script bootstraping your environment with seoul256 color scheme" 
 
 for p in ${DEPENDENCY_PACKAGES[@]}
 do 
@@ -38,7 +31,7 @@ then
     mkdir ${RXVT_COLORSCHEME_DIR}
 fi 
 
-cp .Xdefaults/"$THEME" "$RXVT_COLORSCHEME_DIR"/rxvt.theme
+cp .Xdefaults/rxvt.theme "$RXVT_COLORSCHEME_DIR"/rxvt.theme
 cp .Xresources ~/.Xresources
 xrdb -merge ~/.Xresources
 
@@ -57,30 +50,9 @@ then
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
 
-cp norm+.zsh-theme ~/.oh-my-zsh/themes/ 
+echo "Copying zshrc"
+cp .zshrc ~/
 
-ALIASES=""
-
-echo -n "Would you like install default aliases into zshrc? (y/N) "
-
-read item 
-
-case "$item" in 
-    y|Y)
-        ALIASES=$(cat .zshrc.alias)
-        cat .zshrc.base | awk  -v ALIASES="$ALIASES" '{sub(/{ZSH_ALIASES}/, ALIASES); print; }' > ~/.zshrc
-        echo "Aliases installed!"
-        ;;
-
-    n|N)
-        cat .zshrc.base | awk  -v ALIASES="$ALIASES" '{sub(/{ZSH_ALIASES}/, ALIASES); print; }' > ~/.zshrc
-        ;; 
-
-    *)
-        cat .zshrc.base | awk  -v ALIASES="$ALIASES" '{sub(/{ZSH_ALIASES}/, ALIASES); print; }' > ~/.zshrc
-        ;;
-         
-esac
 
 echo "Setting up VIM"
 cp .vimrc ~/ 
@@ -91,29 +63,25 @@ then
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 
-echo "Setting up mcabber"
+echo "Installing VIM plugins"
 
-if [ ! -d ~/.mcabber ]
-then 
-    mkdir ~/.mcabber 
-fi 
-cp .mcabber/mcabberrc ~/.mcabber/ 
-cp .mcabber/mcabberrc.seoul256 ~/.mcabber/
+vim -c 'PluginInstall' -c 'qa!'
 
-echo -n "Enter username: " 
-read username 
+echo "Installing Go binaries"
 
-sed -i "s/{{USERNAME}}/$username/" ~/.mcabber/mcabberrc 
+vim -c 'GoInstallBinaries' -c 'qa!'
 
-echo -n "Enter password: " 
-read password
+VIMGO_PLUG="~/.vim/bungle/vim-go/"
+VIMGO_COMMIT="adee79b3c48a77df0049ab48cc8bf78790ee5aa2"
 
-sed -i "s/{{PASSWORD}}/$password/" ~/.mcabber/mcabberrc 
+SYNTASTIC_PLUG="~/.vim/bungle/syntastic/"
+SYNTASTIC_COMMIT="ebadf9aff53da37b80becbb1f60f473c3ccfb555"
 
-echo -n "Enter XMPP server: " 
-read server
+echo "Checkouting to preferred commits"
 
-sed -i "s/{{SERVER}}/$server/" ~/.mcabber/mcabberrc 
+cd "$VIMGO_PLUG" && git checkout "$VIMGO_COMIT"
+cd "$SYNTASTIC_PLUG" && git checkout "$SYNTASTIC_COMMIT"
 
+vim -c 'GoInstallBinaries' -c 'qa!'
 
 echo "Finished!"

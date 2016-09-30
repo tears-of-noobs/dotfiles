@@ -1,25 +1,14 @@
-!-------------------------------------------------------------------------------
-! Xft settings
-!-------------------------------------------------------------------------------
-
 Xft.dpi:                    96
 Xft.antialias:              true
 Xft.rgba:                   rgb
 Xft.hinting:                true
 Xft.hintstyle:              hintslight
 
-!-------------------------------------------------------------------------------
-! URxvt settings
-! Colours lifted from Solarized (http://ethanschoonover.com/solarized)
-! More info at:
-! http://pod.tst.eu/http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.1.pod
-!-------------------------------------------------------------------------------
-
 URxvt.depth:                32
 URxvt.geometry:             90x30
 URxvt.transparent:          false
 URxvt.fading:               0
-! URxvt.urgentOnBell:         true
+URxvt.urgentOnBell:         true
 ! URxvt.visualBell:           true
 URxvt.loginShell:           true
 URxvt.saveLines:            5000
@@ -28,9 +17,8 @@ URxvt.lineSpace:            0
 
 ! Fonts
 URxvt.allow_bold:           false
-/* URxvt.font:                 -*-terminus-medium-r-normal-*-12-120-72-72-c-60-iso8859-1 */
-URxvt*font: xft:Monaco:style=Regular:pixelsize=12
-URxvt*boldFont: xft:Monaco:style=Bold:pixelsize=12
+URxvt*font:                 xft:Monaco:style=Regular:pixelsize=12
+URxvt*boldFont:             xft:Monaco:style=Bold:pixelsize=12
 
 ! Fix font space
 URxvt*letterSpace: 0
@@ -40,13 +28,15 @@ URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
 
 ! Perl extensions
-URxvt.perl-ext-common:      default,matcher
+URxvt.perl-ext-common:      url-select,keyboard-select
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
 URxvt.matcher.button:       1
 URxvt.urlLauncher:          chromium
 
 ! Cursor
 URxvt.cursorBlink:          true
-URxvt.cursorColor:          #657b83
 URxvt.cursorUnderline:      false
 
 ! Pointer
@@ -54,28 +44,10 @@ URxvt.pointerBlank:         true
 
 #include ".Xdefaults/rxvt.theme"
 
-*background:              S_base03
-*foreground:              S_base0
 !*fading:                  40
 *fadeColor:               S_base03
 *cursorColor:             S_base1
 *pointerColorBackground:  S_base01
 *pointerColorForeground:  S_base1
 
-*color0:                  S_base02
-*color1:                  S_red
-*color2:                  S_green
-*color3:                  S_yellow
-*color4:                  S_blue
-*color5:                  S_magenta
-*color6:                  S_cyan
-*color7:                  S_base2
-*color9:                  S_orange
-*color8:                  S_base03
-*color10:                 S_base01
-*color11:                 S_base00
-*color12:                 S_base0
-*color13:                 S_violet
-*color14:                 S_base1
-*color15:                 S_base3
 

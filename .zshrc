@@ -5,7 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="norm+"
+ZSH_THEME="agnoster"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -52,11 +52,10 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-export MC_SKIN=$HOME/.mc/solarized.ini
 export GOPATH=$HOME/projects/golang
 export EDITOR=vim
-                                                                                                                                                                         
 export PATH=$PATH:$GOPATH/bin                                                                                                              
+
 eval `dircolors ~/.dircolors`
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -84,5 +83,3 @@ eval `dircolors ~/.dircolors`
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-{ZSH_ALIASES}
