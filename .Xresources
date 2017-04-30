@@ -2,29 +2,21 @@ Xft.dpi:                    96
 Xft.antialias:              true
 Xft.rgba:                   rgb
 Xft.hinting:                true
-Xft.hintstyle:              hintslight
-
-URxvt.depth:                32
-URxvt.geometry:             90x30
+URxvt.depth:                24
 URxvt.transparent:          false
 URxvt.fading:               0
 URxvt.urgentOnBell:         true
-! URxvt.visualBell:           true
 URxvt.loginShell:           true
 URxvt.saveLines:            5000
 URxvt.internalBorder:       3
 URxvt.lineSpace:            0
-
-! Fonts
+URxvt.termName: rxvt-unicode-256color
 URxvt.allow_bold:           false
-URxvt*font:                 xft:Monaco:style=Regular:pixelsize=12
-URxvt*boldFont:             xft:Monaco:style=Bold:pixelsize=12
-
-! Fix font space
-URxvt*letterSpace: 0
-
-! Scrollbar
-URxvt.scrollStyle:          rxvt
+!URxvt*font:                 xft:Monaco:style=Regular:pixelsize=12
+!URxvt*boldFont:             xft:Monaco:style=Bold:pixelsize=12
+URxvt*font:                 xft:Hack-Regular:pixelsize=11
+URxvt*boldFont:             xft:Hack-Bold:pixelsize=11
+URxvt*letterSpace:          -1
 URxvt.scrollBar:            false
 
 ! Perl extensions
@@ -41,13 +33,11 @@ URxvt.cursorUnderline:      false
 
 ! Pointer
 URxvt.pointerBlank:         true
+URxvt.keysym.Mod4-n: string:\033\033[24~
+URxvt.keysym.Mod4-slash: string:\033\033[24~?
 
 #include ".Xdefaults/rxvt.theme"
 
 !*fading:                  40
-*fadeColor:               S_base03
-*cursorColor:             S_base1
-*pointerColorBackground:  S_base01
-*pointerColorForeground:  S_base1
 
 
