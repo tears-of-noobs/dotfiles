@@ -1,28 +1,46 @@
 set nocompatible
 filetype off
 filetype plugin indent off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'
-Plugin 'bling/vim-airline'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'jistr/vim-nerdtree-tabs'  
-Plugin 'cespare/vim-toml'
-Plugin 'hsanson/vim-android'
-Plugin 'posva/vim-vue'
-Plugin 'othree/html5.vim'
-Plugin 'pangloss/vim-javascript'
-Plugin 'digitaltoad/vim-pug'
-Plugin 'fatih/vim-go'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'reconquest/vim-colorscheme'
-Plugin 'Shougo/Unite.vim'
-Plugin 'tpope/vim-fugitive'
+call plug#begin('~/.vim/plugged')
 
-call vundle#end() 
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'cespare/vim-toml'
+Plug 'avakhov/vim-yaml'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'reconquest/vim-colorscheme'
+Plug 'Shougo/Unite.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'ternjs/tern_for_vim'
+Plug 'shawncplus/phpcomplete.vim'
+Plug 'joonty/vdebug'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-surround'
+Plug 'davidhalter/jedi-vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'w0rp/ale'
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'zchee/deoplete-clang'
+Plug 'zchee/deoplete-jedi'
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
+
+call plug#end()
 
 filetype plugin on
 filetype indent on
@@ -43,14 +61,13 @@ set tabstop=4
 set backspace=2
 set laststatus=2
 
+set completeopt=longest,menuone
+set clipboard=unnamedplus
+
+
 let g:airline_powerline_fonts = 1
 let g:airline_theme='reconquest'
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_symbols.linenr = '≡'
 
-" vim-go settings
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_fields = 1
@@ -59,25 +76,70 @@ let g:go_highlight_interfaces = 1
 let g:go_highlight_operators = 1
 let g:go_fmt_command = "goimports"
 
-let g:syntastic_c_include_dirs = [ '/usr/include' ]
-let g:syntastic_php_checkers = ['php', 'phpmd']
-"let g:nerdtree_tabs_focus_on_files=1
-"let NERDTreeMapOpenInTab='<ENTER>'
-"nmap <F8> :TagbarToggle<CR>
-"
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#goto_assignments_command = ''  " dynamically done for ft=python.
+let g:jedi#goto_definitions_command = '<leader>g'  " dynamically done for ft=python.
+let g:jedi#use_tabs_not_buffers = 0  " current default is 1.
+let g:jedi#rename_command = '<Leader>gR'
+let g:jedi#usages_command = '<Leader>gu'
+let g:jedi#completions_enabled = 0
+let g:jedi#smart_auto_mappings = 1
 
-autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
+" Unite/ref and pydoc are more useful.
+let g:jedi#documentation_command = '<Leader>_K'
+let g:jedi#auto_close_doc = 1
+
+hi Error ctermfg=250 ctermbg=160 guifg=#bcbcbc guibg=#d70000
+hi Todo ctermfg=015 ctermbg=202 guifg=#ffffff guibg=#ff5f00
+
+hi link ALEErrorSign Error 
+hi link ALEWarningSign Todo
+
+let g:ale_linters = {
+\   'go': ['gometalinter'],
+\   'javascript': ['eslint'],
+\   'python': ['pylint', 'flake8'],
+\}
+
+let g:ale_sign_error = 'EE'
+let g:ale_sign_warning = 'WW'
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_set_loclist = 1
+let g:ale_open_list = 0
+let g:ale_keep_list_window_open = 1
+let g:ale_set_quickfix = 0
+
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 1
 
 
+let g:vdebug_options = {}
+
+function! SetupDebug()
+  let g:vdebug_options['ide_key']='PHPStorm'
+  let g:vdebug_options['port']=9005
+  let g:vdebug_options['breaks_on_open']=0
+  let g:vdebug_options['server']='local_ip'
+  let g:vdebug_options['path_maps']={'remote_path': 'local_path'}
+endfunction
+nmap <leader>xd :call SetupDebug()<cr>
+
+
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop> 
 nnoremap <up> <nop>
 nnoremap <down> <nop>
 nnoremap <left> <nop>
 nnoremap <right> <nop> 
 
-"""" Open NERDtree by - '\m'
-map <Leader>m <plug>NERDTreeTabsToggle<CR>
 nnoremap <Leader>f :<C-u>Unite file<CR>
 nnoremap <Leader>b :<C-u>Unite buffer<CR>
+
+nnoremap <Leader>n :lnext<CR>
+nnoremap <Leader>r :lprev<CR>
 
 """" Move over tabs by CTRL-PGUP CTRL-PGDOWN
 nmap    <ESC>[5^    <C-PageUp>
@@ -92,14 +154,6 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_min_num_of_chars_for_completion = 1
-let g:ycm_auto_trigger = 1
-let g:ycm_key_list_select_completion = ['<TAB>', '<Enter>']
-nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-
 augroup hilight_over_80
     au!
     au VimResized,VimEnter * set cc= | for i in range(80, &columns > 80 ? &columns : 80) | exec "set cc+=" . i | endfor
@@ -109,3 +163,5 @@ augroup js_settings
     au!
     autocmd FileType javascript,pug setl shiftwidth=2 softtabstop=2 tabstop=2 expandtab 
 augroup end
+
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
