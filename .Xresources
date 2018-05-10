@@ -10,12 +10,10 @@ URxvt.loginShell:           true
 URxvt.saveLines:            5000
 URxvt.internalBorder:       3
 URxvt.lineSpace:            0
-URxvt.termName: rxvt-unicode-256color
+URxvt.termName:             rxvt-unicode-256color
 URxvt.allow_bold:           false
-!URxvt*font:                 xft:Monaco:style=Regular:pixelsize=12
-!URxvt*boldFont:             xft:Monaco:style=Bold:pixelsize=12
-URxvt*font:                 xft:Hack-Regular:pixelsize=11
-URxvt*boldFont:             xft:Hack-Bold:pixelsize=11
+URxvt*font:                 xft:Monaco:style=Regular:pixelsize=12
+URxvt*boldFont:             xft:Monaco:style=Bold:pixelsize=12
 URxvt*letterSpace:          -1
 URxvt.scrollBar:            false
 
@@ -39,5 +37,3 @@ URxvt.keysym.Mod4-slash: string:\033\033[24~?
 #include ".Xdefaults/rxvt.theme"
 
 !*fading:                  40
-
-

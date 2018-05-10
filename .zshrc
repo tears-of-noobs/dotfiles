@@ -1,9 +1,5 @@
 export TERM=rxvt-unicode-256color
 
-export HISTFILE=$HOME/.history
-export HISTSIZE=500
-export SAVEHIST=100000
-
 if [ ! -d ~/.zgen ]; then
     git clone https://github.com/tarjoilija/zgen "${HOME}/.zgen"
 fi
@@ -18,20 +14,41 @@ if ! zgen saved; then
 
     zgen prezto
     zgen prezto git
-	zgen prezto command-not-found
-	zgen prezto history-substring-search
-	zgen prezto syntax-highlighting
+    zgen prezto command-not-found
+    zgen prezto history-substring-search
+    zgen prezto syntax-highlighting
     zgen prezto pacman
 
-	zgen load zsh-users/zsh-syntax-highlighting
-	zgen load tarruda/zsh-autosuggestions
+    zgen load zsh-users/zsh-syntax-highlighting
+    zgen load tarruda/zsh-autosuggestions
     zgen load seletskiy/zsh-prompt-lambda17
 
 
     zgen save 
 fi
 
-#### Prompt theme and color configuration
+export HISTFILE=$HOME/.history
+export HISTSIZE=500
+export SAVEHIST=100000
+
+MYHOST="pornhub.s"
+PROMPT_TEXT="λ"
+
+
+precmd () {
+    print -Pn "\e]0;$PROMPT_TEXT $(pwd)\a"
+}
+
+if [ $MYHOST != $HOST ];
+then
+    PROMPT_TEXT="$HOST"
+    precmd () {
+        last_cmd=$(cat $HISTFILE | tail -n1 | cut -d \; -f2)
+        print -Pn "\e]0;$HOST $last_cmd \a"
+    }
+fi
+
+
 autoload -Uz promptinit
 
 promptinit
@@ -41,8 +58,6 @@ zstyle "lambda17:05-sign" bg "125"
 zstyle "lambda17:05-sign" fg "195"
 zstyle 'lambda17:05-sign' text "ζ"
 
-
-##### ENV variables
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export GOPATH=$HOME/projects/golang
